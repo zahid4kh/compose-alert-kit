@@ -69,6 +69,7 @@ Add the dependency to your project's **app** level `build.gradle.kts` file:
 ## Toastify
 
 Toastify provides a simple way to show Android Toast messages in a Compose-friendly way.
+> 📹 **See it in action**: Check out the [recordings](./recordings) for video demonstrations of Toastify.
 
 #### Basic Usage
 
@@ -99,6 +100,8 @@ Toastify provides a simple way to show Android Toast messages in a Compose-frien
 ## Snackify
 
 Snackify provides a state-driven approach to showing Material 3 Snackbars.
+
+> 📹 **See it in action**: Check out the [recordings](./recordings) for video demonstrations of Snackify.
 
 #### Basic Usage
 
@@ -180,9 +183,14 @@ You can customize snackbars with actions, duration, and callbacks:
 
 The library provides a set of ready-to-use dialog components for common use cases, all with a consistent API and styling.
 
+> 📹 **See it in action**: Check out the [recordings](./recordings) for video demonstrations of all dialog components.
+
 ### `FlashDialog`
   
   A dialog that automatically dismisses after a specified duration, perfect for brief notifications.
+
+  <img src="screenshots/flashdialog.png" alt="FlashDialog Screenshot" width="300"/>
+
   
   ```kotlin
   var showFlashDialog by remember { mutableStateOf(false) }
@@ -205,6 +213,8 @@ The library provides a set of ready-to-use dialog components for common use case
 ### `SuccessDialog`
 
   A dialog for showing success messages that auto-dismisses after a short duration.
+
+  <img src="screenshots/successdialog.png" alt="SuccessDialog Screenshot" width="300"/>
   
   ```kotlin
   var showSuccessDialog by remember { mutableStateOf(false) }
@@ -224,6 +234,8 @@ The library provides a set of ready-to-use dialog components for common use case
 
 A dialog for displaying error messages with a prominent error icon and dismiss button.
 
+<img src="screenshots/errordialog.png" alt="ErrorDialog Screenshot" width="300"/>
+
   ```kotlin
   var showErrorDialog by remember { mutableStateOf(false) }
   
@@ -242,6 +254,8 @@ A dialog for displaying error messages with a prominent error icon and dismiss b
 ### `WarningDialog`
 
 A dialog for showing warning messages with appropriate icon and confirmation.
+
+<img src="screenshots/warningdialog.png" alt="WarningDialog Screenshot" width="300"/>
   
   ```kotlin
   var showWarningDialog by remember { mutableStateOf(false) }
@@ -261,6 +275,8 @@ A dialog for showing warning messages with appropriate icon and confirmation.
 ### `ConfirmationDialog`
 
 A dialog for asking users to confirm important actions with confirm and cancel options.
+
+<img src="screenshots/confirmationdialog.png" alt="ConfirmationDialog Screenshot" width="300"/>
 
   ```kotlin
   var showConfirmationDialog by remember { mutableStateOf(false) }
@@ -284,6 +300,8 @@ A dialog for asking users to confirm important actions with confirm and cancel o
 ### `LoadingDialog`
 
 A dialog showing a progress indicator while an operation is in progress.
+
+<img src="screenshots/loadingdialog.png" alt="LoadingDialog Screenshot" width="300"/>
 
   ```kotlin
   var showLoadingDialog by remember { mutableStateOf(false) }
@@ -317,6 +335,8 @@ A dialog showing a progress indicator while an operation is in progress.
 ### `InputDialog`
 
 A dialog with a text input field for capturing user input.
+
+<img src="screenshots/inputdialog.png" alt="InputDialog Screenshot" width="300"/>
 
   ```kotlin
   var showInputDialog by remember { mutableStateOf(false) }
