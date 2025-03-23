@@ -37,7 +37,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import compose.alertkit.R
+import com.zahid.alertkit.R
 
 /**
  * A dialog for showing error messages with a dismiss button.
