@@ -1,9 +1,14 @@
 # Compose Alert Kit
 
+[![](https://jitpack.io/v/zahid4kh/compose-alert-kit.svg)](https://jitpack.io/#zahid4kh/compose-alert-kit)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.zahid4kh/compose-alert-kit)](https://central.sonatype.com/artifact/io.github.zahid4kh/compose-alert-kit)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
 A lightweight, state-driven library for Jetpack Compose that makes showing toast messages, snackbars, and dialogs simple and intuitive. It provides a clean, declarative API that integrates seamlessly with Compose's reactive paradigm.
 
 ## Table of Contents
 
+- [Installation](#installation)
 - [Features](#features)
 - [Components](#components)
   - [Toastify](#toastify)
@@ -19,7 +24,39 @@ A lightweight, state-driven library for Jetpack Compose that makes showing toast
 - [Common Pitfalls](#common-pitfalls)
 - [License](#license)
 
-## Features
+
+# Installation
+
+## Option 1: Using JitPack
+
+### Step 1: Add the JitPack repository to your project's `settings.gradle.kts` file:
+
+  ```kotlin
+  dependencyResolutionManagement {
+      repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+      repositories {
+          mavenCentral()
+          maven { url = uri("https://jitpack.io") }
+      }
+  }
+  ```
+
+### Step 2: Add the dependency to your project's **app** level `build.gradle.kts` file:
+
+  ```kotlin
+  implementation("com.github.zahid4kh:compose-alert-kit:1.0.0")
+  ```
+
+## Option 2: Using Maven Central
+
+Add the dependency to your project's **app** level `build.gradle.kts` file:
+
+  ```kotlin
+  implementation("io.github.zahid4kh:compose-alert-kit:1.0.0")
+  ```
+
+
+# Features
 
 - 🔄 **Composable API** - Fully integrated with Jetpack Compose's lifecycle
 - 🧠 **State-driven** - Uses Compose state to trigger messages naturally
@@ -27,39 +64,39 @@ A lightweight, state-driven library for Jetpack Compose that makes showing toast
 - 🔍 **Context-aware** - Automatically retrieves the current context
 - 🧩 **Simple integration** - Just a single line of code to get started
 
-## Components
+# Components
 
-### Toastify
+## Toastify
 
 Toastify provides a simple way to show Android Toast messages in a Compose-friendly way.
 
 #### Basic Usage
 
-```kotlin
-@Composable
-fun MyScreen() {
-    // Create a toast state that manages showing toasts
-    val toastifyState = rememberToastify()
-    
-    Button(onClick = {
-        toastifyState.show("Button clicked!")
-    }) {
-        Text("Click Me")
-    }
-}
-```
+  ```kotlin
+  @Composable
+  fun MyScreen() {
+      // Create a toast state that manages showing toasts
+      val toastifyState = rememberToastify()
+      
+      Button(onClick = {
+          toastifyState.show("Button clicked!")
+      }) {
+          Text("Click Me")
+      }
+  }
+  ```
 
 #### Customizing Toast Duration
 
-```kotlin
-Button(onClick = {
-    toastifyState.show("This is a long toast", Toast.LENGTH_LONG)
-}) {
-    Text("Show Long Toast")
-}
-```
+  ```kotlin
+  Button(onClick = {
+      toastifyState.show("This is a long toast", Toast.LENGTH_LONG)
+  } ) {
+      Text("Show Long Toast")
+  }
+  ```
 
-### Snackify
+## Snackify
 
 Snackify provides a state-driven approach to showing Material 3 Snackbars.
 
@@ -69,80 +106,81 @@ There are two ways to use Snackify, depending on your needs:
 
 1. Create both SnackbarHostState and SnackifyState at once:
 
-```kotlin
-@Composable
-fun MyScreen() {
-    val (snackbarHostState, snackifyState) = rememberSnackify()
-    
-    Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
-    ) { padding ->
-        Column(modifier = Modifier.padding(padding)) {
-            Button(onClick = {
-                snackifyState.show("This is a snackbar")
-            }) {
-                Text("Show Snackbar")
-            }
-        }
-    }
-}
-```
+  ```kotlin
+  @Composable
+  fun MyScreen() {
+      val (snackbarHostState, snackifyState) = rememberSnackify()
+      
+      Scaffold(
+          snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
+      ) { padding ->
+          Column(modifier = Modifier.padding(padding)) {
+              Button(onClick = {
+                  snackifyState.show("This is a snackbar")
+              }) {
+                  Text("Show Snackbar")
+              }
+          }
+      }
+  }
+  ```
 
 2. Use an existing SnackbarHostState:
 
-```kotlin
-@Composable
-fun MyApp() {
-    // Create a shared SnackbarHostState for the entire app
-    val snackbarHostState = remember { SnackbarHostState() }
-    
-    Scaffold(snackbarHost = { SnackbarHost(hostState = snackbarHostState) }) { padding ->
-        // Content
-    }
-}
-
-@Composable
-fun SomeScreen(snackbarHostState: SnackbarHostState) {
-    // Create a SnackifyState connected to the existing host state
-    val snackifyState = rememberSnackify(snackbarHostState)
-    
-    Button(onClick = {
-        snackifyState.show("Screen-specific message")
-    }) {
-        Text("Show Snackbar")
-    }
-}
-```
+  ```kotlin
+  @Composable
+  fun MyApp() {
+      // Create a shared SnackbarHostState for the entire app
+      val snackbarHostState = remember { SnackbarHostState() }
+      
+      Scaffold(snackbarHost = { SnackbarHost(hostState = snackbarHostState) }) { padding ->
+          // Content
+      }
+  }
+  
+  
+  @Composable
+  fun SomeScreen(snackbarHostState: SnackbarHostState) {
+      // Create a SnackifyState connected to the existing host state
+      val snackifyState = rememberSnackify(snackbarHostState)
+      
+      Button(onClick = {
+          snackifyState.show("Screen-specific message")
+      }) {
+          Text("Show Snackbar")
+      }
+  }
+  ```
 
 #### Advanced Usage
 
 You can customize snackbars with actions, duration, and callbacks:
 
-```kotlin
-snackifyState.show(
-    message = "Item deleted",
-    actionLabel = "Undo",
-    duration = SnackbarDuration.Long,
-    onAction = { /* Restore the item */ },
-    onDismiss = { /* Clean up */ }
-)
-```
+  ```kotlin
+  snackifyState.show(
+      message = "Item deleted",
+      actionLabel = "Undo",
+      duration = SnackbarDuration.Long,
+      onAction = { /* Restore the item */ },
+      onDismiss = { /* Clean up */ }
+  )
+  ```
 
 #### Manual Dismissal
 
-```kotlin
-Button(onClick = {
-    snackifyState.dismiss()
-}) {
-    Text("Dismiss Snackbar")
-}
-```
+  ```kotlin
+  Button(onClick = {
+      snackifyState.dismiss()
+  }) {
+      Text("Dismiss Snackbar")
+  }
+  ```
 
-### Dialogs
+## Dialogs
 
 The library provides a set of ready-to-use dialog components for common use cases, all with a consistent API and styling.
 
-#### `FlashDialog`
+### `FlashDialog`
   
   A dialog that automatically dismisses after a specified duration, perfect for brief notifications.
   
@@ -164,7 +202,7 @@ The library provides a set of ready-to-use dialog components for common use case
   )
   ```
 
-#### `SuccessDialog`
+### `SuccessDialog`
 
   A dialog for showing success messages that auto-dismisses after a short duration.
   
@@ -182,7 +220,7 @@ The library provides a set of ready-to-use dialog components for common use case
   )
   ```
 
-#### `ErrorDialog`
+### `ErrorDialog`
 
 A dialog for displaying error messages with a prominent error icon and dismiss button.
 
@@ -201,7 +239,7 @@ A dialog for displaying error messages with a prominent error icon and dismiss b
   )
   ```
 
-#### `WarningDialog`
+### `WarningDialog`
 
 A dialog for showing warning messages with appropriate icon and confirmation.
   
@@ -220,7 +258,7 @@ A dialog for showing warning messages with appropriate icon and confirmation.
   )
   ```
 
-#### `ConfirmationDialog`
+### `ConfirmationDialog`
 
 A dialog for asking users to confirm important actions with confirm and cancel options.
 
@@ -243,7 +281,7 @@ A dialog for asking users to confirm important actions with confirm and cancel o
   )
   ```
 
-#### `LoadingDialog`
+### `LoadingDialog`
 
 A dialog showing a progress indicator while an operation is in progress.
 
@@ -276,7 +314,7 @@ A dialog showing a progress indicator while an operation is in progress.
   )
   ```
 
-#### `InputDialog`
+### `InputDialog`
 
 A dialog with a text input field for capturing user input.
 
