@@ -1,6 +1,6 @@
 # Compose Alert Kit
 
-A lightweight, state-driven library for Jetpack Compose that makes showing toast messages and snackbars simple and intuitive. It provides a clean, declarative API that integrates seamlessly with Compose's reactive paradigm.
+A lightweight, state-driven library for Jetpack Compose that makes showing toast messages, snackbars, and dialogs simple and intuitive. It provides a clean, declarative API that integrates seamlessly with Compose's reactive paradigm.
 
 ## Table of Contents
 
@@ -8,6 +8,14 @@ A lightweight, state-driven library for Jetpack Compose that makes showing toast
 - [Components](#components)
   - [Toastify](#toastify)
   - [Snackify](#snackify)
+  - [Dialogs](#dialogs)
+    - [FlashDialog](#flashdialog)
+    - [SuccessDialog](#successdialog)
+    - [ErrorDialog](#errordialog)
+    - [WarningDialog](#warningdialog)
+    - [ConfirmationDialog](#confirmationdialog)
+    - [LoadingDialog](#loadingdialog)
+    - [InputDialog](#inputdialog)
 - [Common Pitfalls](#common-pitfalls)
 - [License](#license)
 
@@ -129,6 +137,169 @@ Button(onClick = {
     Text("Dismiss Snackbar")
 }
 ```
+
+### Dialogs
+
+The library provides a set of ready-to-use dialog components for common use cases, all with a consistent API and styling.
+
+#### `FlashDialog`
+  
+  A dialog that automatically dismisses after a specified duration, perfect for brief notifications.
+  
+  ```kotlin
+  var showFlashDialog by remember { mutableStateOf(false) }
+  
+  Button(onClick = { showFlashDialog = true }) {
+      Text("Show Flash Dialog")
+  }
+  
+  FlashDialog(
+      visible = showFlashDialog,
+      message = "This is a flash message",
+      icon = { 
+          Icon(Icons.Default.Info, contentDescription = "Info") 
+      },
+      duration = 1500,
+      onDismiss = { showFlashDialog = false }
+  )
+  ```
+
+#### `SuccessDialog`
+
+  A dialog for showing success messages that auto-dismisses after a short duration.
+  
+  ```kotlin
+  var showSuccessDialog by remember { mutableStateOf(false) }
+  
+  Button(onClick = { showSuccessDialog = true }) {
+      Text("Show Success Dialog")
+  }
+  
+  SuccessDialog(
+      visible = showSuccessDialog,
+      message = "Operation completed successfully!",
+      onDismiss = { showSuccessDialog = false }
+  )
+  ```
+
+#### `ErrorDialog`
+
+A dialog for displaying error messages with a prominent error icon and dismiss button.
+
+  ```kotlin
+  var showErrorDialog by remember { mutableStateOf(false) }
+  
+  Button(onClick = { showErrorDialog = true }) {
+    Text("Show Error Dialog")
+  }
+  
+  ErrorDialog(
+    visible = showErrorDialog,
+    title = "Error Occurred",
+    message = "Something went wrong while processing your request.",
+    onDismiss = { showErrorDialog = false }
+  )
+  ```
+
+#### `WarningDialog`
+
+A dialog for showing warning messages with appropriate icon and confirmation.
+  
+  ```kotlin
+  var showWarningDialog by remember { mutableStateOf(false) }
+  
+  Button(onClick = { showWarningDialog = true }) {
+      Text("Show Warning Dialog")
+  }
+  
+  WarningDialog(
+      visible = showWarningDialog,
+      title = "Warning",
+      message = "This action might have unexpected consequences.",
+      onDismiss = { showWarningDialog = false }
+  )
+  ```
+
+#### `ConfirmationDialog`
+
+A dialog for asking users to confirm important actions with confirm and cancel options.
+
+  ```kotlin
+  var showConfirmationDialog by remember { mutableStateOf(false) }
+  val toastifyState = rememberToastify()
+  
+  Button(onClick = { showConfirmationDialog = true }) {
+      Text("Show Confirmation Dialog")
+  }
+  
+  ConfirmationDialog(
+      visible = showConfirmationDialog,
+      title = "Confirm Action",
+      message = "Are you sure you want to proceed with this action?",
+      onConfirm = {
+          toastifyState.show("Action confirmed")
+      },
+      onDismiss = { showConfirmationDialog = false }
+  )
+  ```
+
+#### `LoadingDialog`
+
+A dialog showing a progress indicator while an operation is in progress.
+
+  ```kotlin
+  var showLoadingDialog by remember { mutableStateOf(false) }
+  var isLoading by remember { mutableStateOf(false) }
+  
+  Button(onClick = {
+      if (!isLoading) {
+          isLoading = true
+          showLoadingDialog = true
+          
+          // Simulate process completion
+          Handler(Looper.getMainLooper()).postDelayed({
+              showLoadingDialog = false
+              isLoading = false
+          }, 3000)
+      }
+  }) {
+      Text(if (!isLoading) "Show Loading Dialog" else "Loading...")
+  }
+  
+  LoadingDialog(
+      visible = showLoadingDialog,
+      message = "Processing your request...",
+      onDismiss = { 
+          showLoadingDialog = false
+          isLoading = false
+      }
+  )
+  ```
+
+#### `InputDialog`
+
+A dialog with a text input field for capturing user input.
+
+  ```kotlin
+  var showInputDialog by remember { mutableStateOf(false) }
+  val toastifyState = rememberToastify()
+  
+  Button(onClick = { showInputDialog = true }) {
+      Text("Show Input Dialog")
+  }
+  
+  InputDialog(
+      visible = showInputDialog,
+      title = "Enter Information",
+      placeholder = "Type something here",
+      keyboardType = KeyboardType.Text,
+      onConfirm = { input ->
+          toastifyState.show("You entered: $input")
+      },
+      onDismiss = { showInputDialog = false }
+  )
+  ```
+
 
 ## Common Pitfalls
 
