@@ -162,7 +162,7 @@ tasks.register<Zip>("createBundle") {
     destinationDirectory.set(layout.buildDirectory.dir("distributions"))
 
     from(file("${System.getProperty("user.home")}/.m2/repository")) {
-        include("io/github/zahid4kh/composealertkit/${libraryVersion}/**")
+        include("io/github/zahid4kh/compose-alert-kit/${libraryVersion}/**")
     }
 
     doLast {
@@ -178,7 +178,7 @@ tasks.register("generateChecksums") {
     doLast {
         Thread.sleep(1000)
 
-        val repoDir = file("${System.getProperty("user.home")}/.m2/repository/io/github/zahid4kh/composealertkit/${libraryVersion}")
+        val repoDir = file("${System.getProperty("user.home")}/.m2/repository/io/github/zahid4kh/compose-alert-kit/${libraryVersion}")
         println("Generating checksums in directory: ${repoDir.absolutePath}")
 
         repoDir.listFiles()?.forEach { file ->
