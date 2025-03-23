@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package compose.alertkit.toastify
+package com.zahid.alertkit.toastify
 
 import android.content.Context
 import android.widget.Toast

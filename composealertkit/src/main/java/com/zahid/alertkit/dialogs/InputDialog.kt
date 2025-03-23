@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-package compose.alertkit.dialogs
+
+package com.zahid.alertkit.dialogs
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,39 +26,54 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 
 
 /**
- * A dialog for confirming user actions with confirm and cancel buttons.
+ * A dialog with a text input field for capturing user input.
  * @param visible Whether the dialog is currently visible.
  * @param title The title of the dialog.
- * @param message The message to display in the dialog.
+ * @param placeholder The placeholder text for the input field.
+ * @param initialValue The initial value of the input field.
  * @param confirmText The text for the confirm button.
  * @param cancelText The text for the cancel button.
- * @param onConfirm A callback that is invoked when the user confirms the action.
+ * @param keyboardType The type of keyboard to use for the input field.
+ * @param onConfirm A callback that is invoked when the user confirms the input.
  * @param onDismiss A callback that is invoked when the user dismisses the dialog.
  */
 @Composable
-fun ConfirmationDialog(
+fun InputDialog(
     visible: Boolean,
     title: String,
-    message: String,
-    confirmText: String = "Confirm",
+    placeholder: String = "",
+    initialValue: String = "",
+    confirmText: String = "Submit",
     cancelText: String = "Cancel",
-    onConfirm: () -> Unit,
+    keyboardType: KeyboardType = KeyboardType.Text,
+    onConfirm: (String) -> Unit,
     onDismiss: () -> Unit
 ) {
     if (visible) {
+        var inputValue by remember { mutableStateOf(initialValue) }
+
         Dialog(onDismissRequest = onDismiss) {
             Surface(
                 shape = RoundedCornerShape(16.dp),
@@ -73,12 +89,25 @@ fun ConfirmationDialog(
                         color = MaterialTheme.colorScheme.onSurface
                     )
 
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
 
-                    Text(
-                        text = message,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurface
+                    OutlinedTextField(
+                        value = inputValue,
+                        onValueChange = { inputValue = it },
+                        placeholder = { Text(placeholder) },
+                        keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = MaterialTheme.shapes.large,
+                        colors = TextFieldDefaults.colors(
+                            cursorColor = MaterialTheme.colorScheme.onSurface,
+                            focusedContainerColor = MaterialTheme.colorScheme.surface,
+                            unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                            focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                            unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        ),
+                        textStyle = TextStyle(
+                            fontWeight = FontWeight.Normal
+                        )
                     )
 
                     Spacer(modifier = Modifier.height(24.dp))
@@ -98,7 +127,7 @@ fun ConfirmationDialog(
 
                         Button(
                             onClick = {
-                                onConfirm()
+                                onConfirm(inputValue)
                                 onDismiss()
                             }
                         ) {

@@ -15,7 +15,7 @@
  */
 
 
-package compose.alertkit.dialogs
+package com.zahid.alertkit.dialogs
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -24,6 +24,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -33,26 +35,25 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import compose.alertkit.R
+
 
 /**
- * A dialog for showing error messages with a dismiss button.
+ * A dialog for showing warning messages.
  * @param visible Whether the dialog is currently visible.
  * @param title The title of the dialog.
  * @param message The message to display in the dialog.
- * @param dismissText The text for the dismiss button.
+ * @param confirmText The text for the confirm button.
  * @param onDismiss A callback that is invoked when the user dismisses the dialog.
  */
 @Composable
-fun ErrorDialog(
+fun WarningDialog(
     visible: Boolean,
     title: String,
     message: String,
-    dismissText: String = "Dismiss",
+    confirmText: String = "I understand",
     onDismiss: () -> Unit
 ) {
     if (visible) {
@@ -66,9 +67,9 @@ fun ErrorDialog(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Icon(
-                        painter = painterResource(R.drawable.error),
-                        contentDescription = "Error",
-                        tint = MaterialTheme.colorScheme.error,
+                        imageVector = Icons.Default.Warning,
+                        contentDescription = "Warning",
+                        tint = MaterialTheme.colorScheme.tertiary,
                         modifier = Modifier.size(48.dp)
                     )
 
@@ -94,11 +95,11 @@ fun ErrorDialog(
                     Button(
                         onClick = onDismiss,
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.error
+                            containerColor = MaterialTheme.colorScheme.primary
                         ),
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text(dismissText)
+                        Text(confirmText)
                     }
                 }
             }

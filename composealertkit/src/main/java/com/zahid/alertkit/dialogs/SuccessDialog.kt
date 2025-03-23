@@ -15,7 +15,7 @@
  */
 
 
-package compose.alertkit.dialogs
+package com.zahid.alertkit.dialogs
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons

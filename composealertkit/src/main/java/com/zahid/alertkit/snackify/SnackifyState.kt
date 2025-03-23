@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package compose.alertkit.snackify
+package com.zahid.alertkit.snackify
 
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
